@@ -3,9 +3,9 @@ import Loading from './Loading'
 import { getWeatherByCity, getForcastByCity } from '../utils/api'
 import queryString from 'query-string'
 
-function WeatherInfo({ icon, date }){
+function WeatherInfo({ icon, date, onClick }){
     return (
-        <div>
+        <div style={{cursor:'pointer'}} onClick={onClick}>
             <img src={`/app/images/weather-icons/${icon}.svg`} style={{width:50, height:50}}/>
             <p>{date.toDateString()}</p>
         </div>
@@ -16,7 +16,7 @@ function WeatherInfoContainer({ children }){
     let style = {
         display:'flex',
         justifyContent:'space-around',
-        marginTop:50
+        marginTop:50,
     }
     return (
         <section style={style}>
@@ -50,6 +50,17 @@ export default class Forecast extends Component{
         }
     }
 
+    goToWeatherDetails = (weather) => {
+        console.log(weather)
+        let city = queryString.parse(this.props.location.search).city;
+        this.props.history.push({
+            pathname:"/details/" + city,
+            state:{
+                weather
+            }
+        })
+    }
+
     render() {
         let { loading, city, weathers, error } = this.state;
         if(error) return <div className="text-center"><h1>{error}</h1></div>
@@ -60,6 +71,7 @@ export default class Forecast extends Component{
                     <WeatherInfoContainer>
                         {weathers.map((weather,i) => <WeatherInfo 
                         key={i}
+                        onClick={(e) => this.goToWeatherDetails(weather)}
                         date={new Date(weather.dt*1000)}  
                         icon={weather.weather[0].icon}/>)}
                     </WeatherInfoContainer>
