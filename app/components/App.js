@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import Header from './Header'
-import ZipForm from './ZipForm'
+import Home from './Home'
+import Forecast from './Forecast'
+import { getWeatherByCity, getForcastByCity } from '../utils/api'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 export default class App extends Component{
+    componentDidMount(){
+        //getForcastByCity("arlington").then(console.log)
+    }
+
+
     render(){
         return (
-            <div className="container">
-                <Header title="My Weather App">
-                </Header>
-                <div className="main-container" style={{backgroundImage: "url('app/images/pattern.svg')"}}>
-                    <h1>Enter a City and State</h1>
-                    <ZipForm />
+            <Router>
+                <div className="container">
+                    <Header title="My Weather App">
+                    </Header>
+                    <Route path="/" exact component={Home}/>
+                    <Route path="/forecast" exact component={Forecast}/>
                 </div>
-            </div>
+            </Router>
+            
         )
     }
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import ZipForm from './ZipForm'
+import { Link } from 'react-router-dom' 
 
 const styles = {
     titleDiv:{
@@ -17,7 +18,9 @@ export default function Header({ title }) {
     return (
         <header>
             <div style={styles.titleDiv}>
-                <h1>{title}</h1>
+                <Link to='/' style={{textDecoration:'none', color:'white'}}>
+                    <h1>{title}</h1>
+                </Link>
             </div>
             <div style={styles.formDiv}>
                 <ZipForm/>
