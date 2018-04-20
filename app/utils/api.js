@@ -9,5 +9,5 @@ export function getWeatherByCity(city){
 } 
 
 export function getForcastByCity(city){
-    return axios.get(`${BASE_URL}forecast?q=${city}${PARAMS}`)
+    return axios.get(`${BASE_URL}forecast/daily?q=${city}${PARAMS}`)
 }

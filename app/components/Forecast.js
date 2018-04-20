@@ -3,21 +3,68 @@ import Loading from './Loading'
 import { getWeatherByCity, getForcastByCity } from '../utils/api'
 import queryString from 'query-string'
 
+function WeatherInfo({ icon, date }){
+    return (
+        <div>
+            <img src={`/app/images/weather-icons/${icon}.svg`} style={{width:50, height:50}}/>
+            <p>{date.toDateString()}</p>
+        </div>
+    )
+}
+
+function WeatherInfoContainer({ children }){
+    let style = {
+        display:'flex',
+        justifyContent:'space-around',
+        marginTop:50
+    }
+    return (
+        <section style={style}>
+            { children }
+        </section>
+    )
+}
+
 export default class Forecast extends Component{
     state = {
-        loading: true
+        loading: true,
+        city:"",
+        error:"",
+        weathers:[]
     }
 
     async componentDidMount(){
         let city = queryString.parse(this.props.location.search).city;
-        let res = await getForcastByCity(city);
-        console.log(res);
-        this.setState({loading: false})
+        try{
+            let res = await getForcastByCity(city).then(res => res.data);
+            this.setState(
+                {
+                    loading: false, 
+                    city: res.city.name + "," + res.city.country,
+                    weathers: res.list})
+        }catch(e){
+            this.setState({
+                error:"City not found!",
+                loading:false
+            })
+        }
     }
 
     render() {
+        let { loading, city, weathers, error } = this.state;
+        if(error) return <div className="text-center"><h1>{error}</h1></div>
         return (
-           this.state.loading ? <Loading/> : <h1>Forecast</h1>
+           loading ? <Loading/> : (
+               <div className="text-center">
+                    <h1>{ city }</h1>
+                    <WeatherInfoContainer>
+                        {weathers.map((weather,i) => <WeatherInfo 
+                        key={i}
+                        date={new Date(weather.dt*1000)}  
+                        icon={weather.weather[0].icon}/>)}
+                    </WeatherInfoContainer>
+               </div>
+           )
         )
     }
 }

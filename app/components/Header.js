@@ -1,6 +1,6 @@
 import React from 'react'
 import ZipForm from './ZipForm'
-import { Link } from 'react-router-dom' 
+import { Link, withRouter } from 'react-router-dom' 
 
 const styles = {
     titleDiv:{
@@ -14,7 +14,14 @@ const styles = {
     }
 }
 
-export default function Header({ title }) {
+function Header({ title, history }) {
+    function getWeather(city){
+        history.push({
+            pathname:'/forecast',
+            search:'city=' + city
+        })
+    }
+
     return (
         <header>
             <div style={styles.titleDiv}>
@@ -23,8 +30,10 @@ export default function Header({ title }) {
                 </Link>
             </div>
             <div style={styles.formDiv}>
-                <ZipForm/>
+                <ZipForm onClick={getWeather}/>
             </div>
         </header>
     )
 }
+
+export default withRouter(Header)
