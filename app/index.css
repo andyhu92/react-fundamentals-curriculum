@@ -7,7 +7,7 @@ body {
     height: 100%;
     width: 100%;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+    font-family: cursive;
 }
 
 #app, .container{
@@ -24,4 +24,54 @@ body {
     height: 100%;
     background-size: cover;
     padding:10px;
+}
+
+.main-container div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-container h1{
+    color:white;
+    font-weight: 100;
+    font-size: 3rem;
+}
+
+header{
+    background-color: #fe6b3b;
+    margin: 0px;
+    padding: 5px 10px 5px;
+    color:white;
+    display:flex;
+}
+
+.zip-input{
+    border-radius: 5px;
+    min-width: 223px;
+    height: 29px;
+    border: 1px solid lightblue;
+    padding: 3px;
+    margin-bottom: 15px;
+    margin-right:20px;
+}
+
+.zip-button{
+    color: white;
+    background-color: #1dbf1d;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #17d917;
+    cursor: pointer;
+    font-weight: bold;
+    transition: box-shadow 0.2s ease;
+}
+
+.zip-button:hover{
+    box-shadow: 1px 1px 2px black;
+}
+
+.zip-button:active{
+    box-shadow: -1px -1px 2px black;
 }
